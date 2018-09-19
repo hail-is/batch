@@ -24,6 +24,7 @@ sed -e "s,@sha@,$SHA," \
     < deployment.yaml.in > deployment.yaml
 
 kubectl apply -f deployment.yaml
+kubectl rollout status deployment batch-deployment
 
 # ci can't recover from batch restart yet
 kubectl delete pods -l app=hail-ci
