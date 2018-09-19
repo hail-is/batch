@@ -24,12 +24,7 @@ sed -e "s,@sha@,$SHA," \
     < deployment.yaml.in > deployment.yaml
 
 kubectl apply -f deployment.yaml
-
-# poll until batch is fully deployed
-while [[ 1 -ne $(kubectl get pods -l app=batch --no-headers | wc -l) ]]
-do
-    sleep 5
-done
+kubectl rollout status deployment batch-deployment
 
 # ci can't recover from batch restart yet
 kubectl delete pods -l app=hail-ci
